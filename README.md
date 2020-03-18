@@ -1,14 +1,18 @@
-#Benchmark results
+# Benchmark results
 
-Configuration: MacBook Pro 2.7 GHz Intel Core i5
+This is the 2011 language benchmark of Robert Hundt, updated and rerun with the current versions of compilers.
+Optimized versions of JVM languages (Java and Scala) take the lead in runtime speed while C++ (not optimized) still has the lowest memory consumption.
+With the latest compiler, Go speed has greatly improved, while keeping memory usage to a modest level.
 
+### Configuration: 
+MacBook Pro 2.7 GHz Intel Core i5
 Java(TM) SE Runtime Environment (build 1.8.0_202-b08)
 Java HotSpot(TM) 64-Bit Server VM (build 25.202-b08, mixed mode)
-
+Scala sbt 1.3.8
 go version go1.13.1 darwin/amd64
 
 ## Run time (s) / memory (MB)
-C++: 20 
+C++: 20 / 140
 Java: 16 / 921
 Java_pro: 11 / 523
 Scala: 24 / 690
