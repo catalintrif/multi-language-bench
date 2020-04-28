@@ -18,7 +18,7 @@
 
 // BasicBlock's static members
 //
-var numBasicBlocks = 0;
+let numBasicBlocks = 0;
 
 function getNumBasicBlocks() {
   return numBasicBlocks;
@@ -71,7 +71,7 @@ BasicBlock.prototype.dump = function() {
     }
   }
 
-  print(res);
+  console.log(res);
 }
 
 
@@ -179,10 +179,10 @@ SimpleLoop.prototype.dump = function(indent) {
     res += "  ";
   }
 
-  print(res, "loop-", this.counter, " nest: ",
+  console.log(res, "loop-", this.counter, " nest: ",
         this.nestingLevel, " depth ", this.depthLevel );
   if (this.isReducible == false) {
-    print("  irreducible");
+    console.log("  irreducible");
   }
 }
 
@@ -355,22 +355,22 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
   // and so on. This enum contains a symbolic name for all these
   // classifications. Python doesn't have enums, so we just create values.
   //
-  var BB_TOP          = 0; // uninitialized
-  var BB_NONHEADER    = 1; // a regular BB
-  var BB_REDUCIBLE    = 2; // reducible loop
-  var BB_SELF         = 3; // single BB loop
-  var BB_IRREDUCIBLE  = 4; // irreducible loop
-  var BB_DEAD         = 5; // a dead BB
-  var BB_LAST         = 6; // Sentinel
+  const BB_TOP          = 0; // uninitialized
+  const BB_NONHEADER    = 1; // a regular BB
+  const BB_REDUCIBLE    = 2; // reducible loop
+  const BB_SELF         = 3; // single BB loop
+  const BB_IRREDUCIBLE  = 4; // irreducible loop
+  const BB_DEAD         = 5; // a dead BB
+  const BB_LAST         = 6; // Sentinel
 
   //
   // Constants
   //
   // Marker for uninitialized nodes.
-  var UNVISITED = -1;
+  const UNVISITED = -1;
 
   // Safeguard against pathologic algorithm behavior.
-  var MAXNONBACKPREDS = (32 * 1024);
+  const MAXNONBACKPREDS = (32 * 1024);
 
   //
   // IsAncestor
@@ -426,17 +426,17 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
   // paper (which, in turn, is similar to the one used by Tarjan).
   //
   this.findLoops = function() {
-    var size = this.cfg.getNumNodes();
+    let size = this.cfg.getNumNodes();
 
-    var nonBackPreds    = [];
-    var backPreds       = [];
-    var number          = {};
-    var header          = [];
-    var types           = [];
-    var last            = [];
-    var nodes           = [];
+    let nonBackPreds    = [];
+    let backPreds       = [];
+    let number          = {};
+    let header          = [];
+    let types           = [];
+    let last            = [];
+    let nodes           = [];
 
-    for (var i=0; i < size; ++i) {
+    for (let i=0; i < size; ++i) {
       nonBackPreds.push([]);
       backPreds.push([]);
       header.push(0);
@@ -450,7 +450,7 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
     //   - depth-first traversal and numbering.
     //   - unreached BB's are marked as dead.
     //
-    for (var k in this.cfg.basicBlockMap) {
+    for (let k in this.cfg.basicBlockMap) {
       number[this.cfg.basicBlockMap[k]] = UNVISITED;
     }
 
@@ -505,18 +505,18 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
     // we ensure that inner loop headers will be processed before the
     // headers for surrounding loops.
     //
-    for (var w = size-1; w >=0; --w) {
+    for (let w = size-1; w >=0; --w) {
       // this is 'P' in Havlak's paper
-      var nodePool = [];
+      let nodePool = [];
 
-      var nodeW = nodes[w].bb;
+      let nodeW = nodes[w].bb;
       if (nodeW == undefined) {
         continue;
       }
 
       // Step d:
-      for (var vi = 0; vi < backPreds[w].length; ++vi) {
-        var v = backPreds[w][vi];
+      for (let vi = 0; vi < backPreds[w].length; ++vi) {
+        let v = backPreds[w][vi];
         if (v != w) {
           nodePool.push(nodes[v].findSet());
         } else {
@@ -526,8 +526,8 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
 
       // Copy nodePool to workList.
       //
-      var workList = [];
-      for (var n = 0; n < nodePool.length; ++n) {
+      let workList = [];
+      for (let n = 0; n < nodePool.length; ++n) {
         workList.push(nodePool[n]);
       }
 
@@ -537,7 +537,7 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
       // work the list...
       //
       while (workList.length) {
-        var x = workList.shift();
+        let x = workList.shift();
         // Step e:
         //
         // Step e represents the main difference from Tarjan's method.
@@ -550,14 +550,14 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
         // The algorithm has degenerated. Break and
         // return in this case.
         //
-        var nonBackSize = nonBackPreds[x.dfsNumber].length;
+        let nonBackSize = nonBackPreds[x.dfsNumber].length;
         if (nonBackSize > MAXNONBACKPREDS) {
           return 0;
         }
 
-        for (var iter=0; iter < nonBackPreds[x.dfsNumber].length; ++iter) {
-          var y = nodes[nonBackPreds[x.dfsNumber][iter]];
-          var ydash = y.findSet();
+        for (let iter=0; iter < nonBackPreds[x.dfsNumber].length; ++iter) {
+          let y = nodes[nonBackPreds[x.dfsNumber][iter]];
+          let ydash = y.findSet();
 
           if (!isAncestor(w, ydash.dfsNumber, last)) {
             types[w] = BB_IRREDUCIBLE;
@@ -600,8 +600,8 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
         //
         nodes[w].loop = loop;
 
-        for (var np = 0; np < nodePool.length; ++np) {
-          var node = nodePool[np];
+        for (let np = 0; np < nodePool.length; ++np) {
+          let node = nodePool[np];
 
           // Add nodes to loop descriptor.
           header[node.dfsNumber] = w;
@@ -627,7 +627,7 @@ function HavlakLoopFinder(cfgParm, lsgParm) {
 //======================================================
 
 function buildDiamond(cfg, start) {
-  var bb0 = start;
+  let bb0 = start;
   new BasicBlockEdge(cfg, bb0, bb0 + 1);
   new BasicBlockEdge(cfg, bb0, bb0 + 2);
   new BasicBlockEdge(cfg, bb0 + 1, bb0 + 3);
@@ -670,7 +670,7 @@ cfg.createNode(1);  //s bottom
 buildConnect(cfg, 0, 2);
 
 // execute loop recognition 15000 times to force compilation
-print("15000 dummy loops");
+console.log("15000 dummy loops");
 
 for (var dummyloop = 0; dummyloop < 15000; ++dummyloop) {
   var lsglocal = new LSG();
@@ -684,7 +684,7 @@ for (var parlooptrees=0; parlooptrees < 10; parlooptrees++) {
   cfg.createNode(n + 1);
   buildConnect(cfg, n, n + 1);
   n = n + 1;
-  for (var i=0; i < 2; ++i) {
+  for (var i=0; i < 100; ++i) {
     var topNode = n;
     n = buildStraight(cfg, n, 1);
     for (var j=0; j < 25; j++) {
@@ -696,18 +696,18 @@ for (var parlooptrees=0; parlooptrees < 10; parlooptrees++) {
     n = bottom;
   }
 }
-print("Performing Loop Recognition\n1 Iteration");
+console.log("Performing Loop Recognition\n1 Iteration");
 
 finder = new HavlakLoopFinder(cfg, lsg);
 var num_loops = finder.findLoops();
 lsg.calculateNestingLevel();
-print("Another 100 iterations...")
+console.log("Another 50 iterations...")
 
-for (var i = 0; i < 100; i++) {
-  //  print(i);
+for (var i = 0; i < 50; i++) {
+  //  console.log(i);
   var lsglocal = new LSG();
   var finder = new HavlakLoopFinder(cfg, lsglocal);
   num_loops = finder.findLoops();
 }
 
-print("Found ", num_loops, " loops (including artificial root node)" );
+console.log("Found ", num_loops, " loops (including artificial root node)" );

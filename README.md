@@ -24,6 +24,7 @@ With the latest compiler, Go speed has greatly improved, while keeping memory us
 |Scala_pro | 10 s     | 1070 MB|
 | Go       | 29 s     | 483 MB |
 | Go_pro   | 22 s     | 332 MB |
+| Node.js  | 59 s     | 900 MB |
 
 ## Other configurations
 ### OpenJDK 13
@@ -32,8 +33,8 @@ OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)
 
 | Language | Run time | Memory |
 |----------|----------|--------|
-| Java     | 28 s     | 1310 MB |
-| Java_pro | 12 s     | 1310 MB |
+| Java     | 17 s     | 799 MB |
+| Java_pro | 11 s     | 1310 MB |
 | Scala    | 33 s     | 1200 MB |
 |Scala_pro | 12 s     | 692 MB|
 
@@ -43,7 +44,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)
 
 | Language | Run time | Memory |
 |----------|----------|--------|
-| Java     | 28 s     | 1500 MB |
-| Java_pro | 12 s     | 1200 MB |
+| Java     | 17 s     | 1500 MB |
+| Java_pro | 11 s     | 1200 MB |
 | Scala    | 30 s     | 1180 MB |
 |Scala_pro | 12 s     | 1130 MB|

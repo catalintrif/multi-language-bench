@@ -24,7 +24,7 @@
 #
 
 run: 
-	d8 LoopTesterApp.js
+	node --stack-size=100000 LoopTesterApp.js
 
 clean:
 	rm -f *~
